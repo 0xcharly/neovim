@@ -45,11 +45,11 @@
                     ${type} = value;
                   };
                 }))
-            (mapAttrs (const final.fetchurl))
+            (mapAttrs (lang: attrs: { src = final.fetchurl attrs; }))
             (self: self // {
               markdown = final.stdenv.mkDerivation {
-                inherit (self.markdown) name;
-                src = self.markdown;
+                inherit (self.markdown) src;
+                inherit (self.markdown.src) name;
                 installPhase = ''
                   mv tree-sitter-markdown $out
                 '';
